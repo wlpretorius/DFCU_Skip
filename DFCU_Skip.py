@@ -28,7 +28,7 @@ from pmdarima.arima.stationarity import ADFTest
 
 # Pages and Tabs
 st.set_page_config(layout='wide', initial_sidebar_state="expanded")
-sidebarimage = Image.open("C:\\Users\\Admin\\Desktop\\Riskworx\\Riskworx Wordmark Blue.png") 
+sidebarimage = Image.open("Riskworx Wordmark Blue.png") 
 st.sidebar.image(sidebarimage, width=250)
 df = st.sidebar.file_uploader('Upload your CSV file here:', type='csv')
 st.sidebar.header('Navigation')
@@ -36,8 +36,8 @@ tabs = ["About","Run all the models"]
 page = st.sidebar.radio("Riskworx Pty (Ltd)",tabs)
 
 if page == "About":
-    icon = Image.open("C:\\Users\\Admin\\Desktop\\Riskworx\\RWx & Slogan.png")
-    image = Image.open("C:\\Users\\Admin\\Desktop\\Riskworx\\RWx & Slogan.png")
+    icon = Image.open("RWx & Slogan.png")
+    image = Image.open("RWx & Slogan.png")
     st.image(image, width=700)
     st.header("About")
     st.write("This interface is designed for the Development Finance Company of Uganda Bank Limited (DFCU) to forecast their interest rate data as provided to Riskworx Pty (Ltd).")
