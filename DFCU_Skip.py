@@ -340,7 +340,7 @@ if page == "Run all the models":
 
 
         # Combining everything into one dataframe
-        st.subheader("Holt-Winters Combined Output of Forecasts for the Next Three Months")
+        st.subheader("Holt-Winters Combined Output of Forecasts")
         column_name = ['6M_LIBOR']
         full_csv_hw = pd.DataFrame(data = predictions_libor, columns = column_name)
         full_csv_hw.index = pd.to_datetime(full_csv_hw.index)
@@ -352,7 +352,7 @@ if page == "Run all the models":
         full_csv_hw['Lending_Rates-Foreign'] = predictions_lendingforeign
         st.write(full_csv_hw)
         
-        st.subheader("ARIMA Combined Output of Forecasts for the Next Three Months")
+        st.subheader("ARIMA Combined Output of Forecasts")
         full_csv_arima = pd.DataFrame(data = y_pred_libor_arima_df, columns = column_name)
         full_csv_arima['6M Fixed Deposit - FCY'] = y_pred_fcy_arima_df
         full_csv_arima['6M Fixed Deposit - LCY'] = y_pred_lcy_arima_df
@@ -361,13 +361,13 @@ if page == "Run all the models":
         full_csv_arima['Lending_Rates-Foreign'] = y_pred_lendingforeign_arima_df
         st.write(full_csv_arima)
         
-        st.subheader("Vector Autoregression Combined Output of Forecasts for the Next Three Months")
+        st.subheader("Vector Autoregression Combined Output of Forecasts")
         column_name_var = ['Interbank_Rate', 'Prime Rate', 'Central_Bank_Rate_(CBR)', '6M T-Bill Rate']
         full_csv_var = pd.DataFrame(data = true_predictions_localrates, columns = column_name_var)
         full_csv_var_merged = pd.concat([full_csv_var, true_predictions_foreign], axis=1)
         st.write(full_csv_var_merged)
         
-        st.subheader("Vector Autoregression Moving Average Combined Output of Forecasts for the Next Three Months")
+        st.subheader("Vector Autoregression Moving Average Combined Output of Forecasts")
         column_name_var = ['Interbank_Rate', 'Prime Rate', 'Central_Bank_Rate_(CBR)', '6M T-Bill Rate']
         full_csv_varma = pd.DataFrame(data = yhat_localrates_varma_df, columns = column_name_var)
         full_csv_varma_merged = pd.concat([full_csv_varma, yhat_foreign_varma_df], axis=1)
