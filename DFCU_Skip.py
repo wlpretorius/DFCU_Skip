@@ -5,6 +5,7 @@ Created on Sat Apr 10 08:36:55 2021
 @author: Admin
 """
 #import required packages
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -44,15 +45,37 @@ if page == "About":
     st.header("Requirements")
     st.write("Currently, one input csv file is needed for the models to provide interest rate forecasts.")         
     st.header("How to use")  
-    st.write("Please insert your CSV file in the left tab then wait for the models to update.")   
-    st.header("More about Streamlit")                        
-    st.markdown("Official documentation of **[Streamlit](https://docs.streamlit.io/en/stable/getting_started.html)**")
+    st.write("Please read the instructions below then insert your CSV file in the left tab. The models will update automatically. Note, all plots allow zooming.")
+    
+    # if st.checkbox("Show Instructions"):
+    #     def show_pdf(file_path):
+    #         with open(file_path,"rb") as f:
+    #               base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+    #         pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf">'
+    #         st.markdown(pdf_display, unsafe_allow_html=True)
+    #     show_pdf("C:\\Users\\Admin\\Desktop\\Riskworx\\ALP\\DFCU_Instructions_on_GUI.pdf")
+    
+    def get_binary_file_downloader_html(bin_file, file_label='File'):
+        with open(bin_file, 'rb') as f:
+            data = f.read()
+        bin_str = base64.b64encode(data).decode()
+        href = f'<a href="data:application/octet-stream;base64,{bin_str}" download="{os.path.basename(bin_file)}">Download {file_label}</a>'
+        return href
+    st.markdown(get_binary_file_downloader_html('DFCU_Instructions_on_GUI.pdf', 'Instructions'), unsafe_allow_html=True)
+    
     st.write("")
-    st.header("Author:")
+    st.header("Author and Creator")
     st.markdown(""" **[Willem Pretorius](https://www.riskworx.com//)**""")
     st.markdown(""" **[Contact](mailto:willem.pretorius@riskworx.com)** """)
     st.write("Created on 30/03/2021")
-    st.write("Last updated: **08/04/2021**")
+    st.write("Last updated: **16/04/2021**")
+    st.write("")
+    st.header("Product Owner")
+    st.markdown(""" **[Illse Nell](https://www.riskworx.com//)**""")
+    st.markdown(""" **[Contact](mailto:illse.nell@riskworx.com)** """)
+    st.write("")
+    st.header("More about Streamlit")                        
+    st.markdown("Official documentation of **[Streamlit](https://docs.streamlit.io/en/stable/getting_started.html)**")
     
 if page == "Run all the models":
     if df is not None:            
@@ -280,7 +303,7 @@ if page == "Run all the models":
 
         # Local Rates - VARMA
         model_localrates_varma = VARMAX(appdata_localrates, order=(1, 2))
-        model_localrates_varma_fit = model_localrates_varma.fit(disp=False, maxiter=150)
+        model_localrates_varma_fit = model_localrates_varma.fit(disp=False)
         yhat_localrates_varma = model_localrates_varma_fit.forecast(steps=periods_input)
         yhat_localrates_varma_df = pd.DataFrame(yhat_localrates_varma, columns=appdata_localrates.columns)
         yhat_localrates_varma_df.index = pd.date_range(appdata_localrates.index.max() + timedelta(1), periods = periods_input, freq='MS')
@@ -306,7 +329,7 @@ if page == "Run all the models":
 
         # Foreign Deposits - VARMA
         model_foreign_varma = VARMAX(appdata_foreign, order=(1, 2))
-        model_foreign_varma_fit = model_foreign_varma.fit(disp=False, maxiter=250)                                                         
+        model_foreign_varma_fit = model_foreign_varma.fit(disp=False)                                                         
         yhat_foreign_varma = model_foreign_varma_fit.forecast(steps=periods_input)
         yhat_foreign_varma_df = pd.DataFrame(yhat_foreign_varma, columns=appdata_foreign.columns)
         yhat_foreign_varma_df.index = pd.date_range(appdata_foreign.index.max() + timedelta(1), periods = periods_input, freq='MS')
@@ -375,7 +398,9 @@ if page == "Run all the models":
         # When no file name is given, pandas returns the CSV as a string
         b64_varma = base64.b64encode(csv_exp_varma.encode()).decode()  # some strings <-> bytes conversions necessary here
         href_varma = f'<a href="data:file/csv;base64,{b64_varma}">Download CSV File</a> (right-click and save as ** &lt;VARMA__forecasts_&gt;.csv**)'
-        st.markdown(href_varma, unsafe_allow_html=True)        
+        st.markdown(href_varma, unsafe_allow_html=True)
+
+       
         
         
 
