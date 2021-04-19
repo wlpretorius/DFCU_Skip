@@ -29,7 +29,7 @@ from pmdarima.arima.stationarity import ADFTest
 
 # Pages and Tabs
 st.set_page_config(layout='wide', initial_sidebar_state="expanded")
-sidebarimage = Image.open("C:\\Users\\Admin\\Desktop\\Riskworx\\Riskworx Wordmark Blue.png") 
+sidebarimage = Image.open("Riskworx Wordmark Blue.png") 
 st.sidebar.image(sidebarimage, width=250)
 df = st.sidebar.file_uploader('Upload your CSV file here:', type='csv')
 st.sidebar.header('Navigation')
